@@ -1,0 +1,6 @@
+@BurkWebAPI_HostAddress = http://localhost:5198
+
+GET {{BurkWebAPI_HostAddress}}/api/
+Accept: application/json
+
+###
