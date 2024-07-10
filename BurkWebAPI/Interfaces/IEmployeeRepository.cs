@@ -1,9 +1,16 @@
-﻿using BurkWebAPI.Models;
+﻿using BurkWebAPI.Dto;
+using BurkWebAPI.Models;
 
 namespace BurkWebAPI.Interfaces
 {
     public interface IEmployeeRepository
     {
         ICollection<Employee> GetEmployees();
+
+        Employee GetEmployee(int employeeID);
+
+        bool EmployeeExists(int employeeID);
+
+        bool CreateEmployee(EmployeeDto employee);
     }
 }
