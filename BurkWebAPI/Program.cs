@@ -22,10 +22,13 @@ if (builder.Environment.IsProduction())
     builder.Configuration.AddAzureKeyVault(keyVaultURI, credential, new KeyVaultSecretManager());
     var client = new SecretClient(keyVaultURI, credential);
 
+    Console.WriteLine("AzureConnectionString", client.GetSecret("AzureDB").Value.Value.ToString());
+
     builder.Services.AddDbContext<DataContext>(options =>
     {
-        options.UseSqlServer(client.GetSecret("AzureConnection").Value.Value.ToString());
+        options.UseSqlServer(client.GetSecret("AzureDB").Value.Value.ToString());
     });
+
 }
 
 //if (builder.Environment.IsDevelopment())
@@ -44,13 +47,13 @@ if (builder.Environment.IsProduction())
 //    });
 //}
 
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddDbContext<DataContext>(options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    });
-}
+//if (builder.Environment.IsDevelopment())
+//{
+//    builder.Services.AddDbContext<DataContext>(options =>
+//    {
+//        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+//    });
+//}
 
 var app = builder.Build();
 
