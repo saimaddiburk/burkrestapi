@@ -18,7 +18,6 @@ namespace BurkWebAPI.Repository
         public bool CreateEmployee(EmployeeDto employee)
         {
             string p0 = "CreateEmployee";
-
             try
             {
                 _context.Database.ExecuteSqlInterpolated($@"EXEC {p0}
