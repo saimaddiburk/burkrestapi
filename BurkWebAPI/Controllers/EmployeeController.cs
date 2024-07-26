@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BurkWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/users")]
+    [Route("api/[controller]")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -16,7 +16,7 @@ namespace BurkWebAPI.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetEmployees")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         public IActionResult GetEmployees()
         {
@@ -28,7 +28,7 @@ namespace BurkWebAPI.Controllers
             return Ok(employees);
         }
 
-        [HttpGet("{employeeID}")]
+        [HttpGet("GetEmployee/{employeeID}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
         public IActionResult GetEmployee(int employeeID)
@@ -46,16 +46,42 @@ namespace BurkWebAPI.Controllers
             return Ok(employees);
         }
 
-        [HttpPost]
-        public IActionResult CreateEmployee([FromBody] EmployeeDto employee)
+        [HttpPost("CreateEmployee")]
+        public IActionResult CreateEmployee([FromBody] EmployeeDto employeeDto)
         {
-            if (_employeeRepository.CreateEmployee(employee))
+            if (_employeeRepository.CreateEmployee(employeeDto))
             {
                 return Ok("Employee created successfully");
             }
             else
             {
                 return BadRequest("Failed to create employee");
+            }
+        }
+
+        [HttpPut("UpdateEmployee/{employeeID}")]
+        public IActionResult UpdateEmployee(int employeeID, [FromBody]EmployeeDto employeeDto)
+        {
+            if (_employeeRepository.UpdateEmployee(employeeID, employeeDto))
+            {
+                return Ok("Employee updated successfully");
+            }
+            else
+            {
+                return BadRequest("Failed to update employee");
+            }
+        }
+
+        [HttpDelete("DeleteEmployee/{employeeID}")]
+        public IActionResult DeleteEmployee(int employeeID)
+        {
+            if (_employeeRepository.DeleteEmployee(employeeID))
+            {
+                return Ok("Employee deleted successfully");
+            }
+            else
+            {
+                return BadRequest("Failed to delete employee");
             }
         }
     }

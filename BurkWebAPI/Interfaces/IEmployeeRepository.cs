@@ -11,6 +11,10 @@ namespace BurkWebAPI.Interfaces
 
         bool EmployeeExists(int employeeID);
 
-        bool CreateEmployee(EmployeeDto employee);
+        bool CreateEmployee(EmployeeDto employeeDto);
+
+        bool UpdateEmployee(int employeeID, EmployeeDto employeeDto);
+
+        bool DeleteEmployee(int employeeID);
     }
 }
